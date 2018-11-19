@@ -1,0 +1,1 @@
+﻿CREATE TABLE birthday (id integer primary key, location VARCHAR(50), name VARCHAR(50), birthday int, birthmonth int, birthyear int, deleted boolean, deletedreason varchar(100));
