@@ -19,6 +19,8 @@ namespace birthdayservice
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseUrls("http://+:5002")
+                .UseKestrel(options => { options.ListenAnyIP(5002); })
                 .UseStartup<Startup>();
     }
 }

@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    image: "10.0.101.45:5000/birthdayservice"
+    ports:
+     - "8081:5002"
+    environment:
+     - DATABASEPATH=/c/temp/birthday.db
+    volumes:
+     - /root/ekv/birthday/birthday.db:/c/temp/birthday.db

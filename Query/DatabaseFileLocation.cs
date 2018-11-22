@@ -25,7 +25,23 @@ namespace birthdayservice.Query
         public const string EnvironmentArguments = "DATABASEPATH";
         public static string DatabaseLocation
         {
-            get { return DebugLocation; } //TODO: Add environment variable when in docker.
+            get
+            {
+                var environmentVariables = Environment.GetEnvironmentVariables();
+                if (!environmentVariables.Contains(EnvironmentArguments))
+                {
+                    return DebugLocation;
+                }
+
+                var argumentsHolder = environmentVariables[EnvironmentArguments] as string;
+                var location = argumentsHolder?.Trim()?.Split();
+                if (location?.Length == 0 || location == null)
+                {
+                    return DebugLocation;
+                }
+
+                return location[0];
+            }
         }
     }
 }

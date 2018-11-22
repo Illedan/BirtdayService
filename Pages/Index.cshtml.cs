@@ -19,9 +19,9 @@ namespace birthdayservice.Pages
         }
 
         public BirtdayResponse Response { get; set; }
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string location)
         {
-            var birtdays = await m_birthdayQuery.GetBirthdays(RouteData.Values["location"].ToString());
+            var birtdays = await m_birthdayQuery.GetBirthdays(location);
             await Task.Delay(0);
             var now = DateTime.Now;
             Response = new BirtdayResponse

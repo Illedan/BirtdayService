@@ -8,7 +8,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-
+*.deb
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -131,6 +131,7 @@ _TeamCity*
 # AxoCover is a Code Coverage Tool
 .axoCover/*
 !.axoCover/settings.json
+
 
 # Visual Studio code coverage results
 *.coverage
@@ -328,3 +329,5 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+published/*
