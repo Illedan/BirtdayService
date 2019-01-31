@@ -6,40 +6,22 @@
     ViewData["Title"] = "Birthdays";
 }
 
-<center>
+<div style="     position: relative; text-align: center;
+                                      ">
     @if (Model.Response.TodaysBirthdays.Any())
     {
-        <div class="container">
-            <div class="row valign-wrapper">
-                <div class="col s6 offset-s3 valign">
-                    <div class="card blue-grey darken-1">
-                        <div class="card-content white-text">
-                            @foreach (var birthday in Model.Response.TodaysBirthdays)
-                            {
-                                <span class="card-title">@birthday.Name</span>
-
-                                <table style="  margin-bottom: 25px; vertical-align: middle; horiz-align: right">
-                                    <tr>
-                                        <td><i class="fa fa-birthday-cake fa-lg"></i></td>
-
-                                        @if (@birthday.IsAniversary)
-                                        {
-                                            <td style="text-align: center; vertical-align: middle;">fyller @birthday.Years år i dag!</td>
-                                        }
-                                        else
-                                        {
-                                            <td style="text-align: center; vertical-align: middle;">har bursdag!</td>
-                                        }
-                                        <td style="text-align: right; vertical-align: middle;"><i class="fa fa-birthday-cake fa-lg"></i></td>
-                                    </tr>
-                                </table>
-                            }
+        foreach (var birthday in Model.Response.TodaysBirthdays)
+        {
+            if (@birthday.IsAniversary)
+            {
+                <p style="font-size:24px"><b>@birthday.Name</b> fyller @birthday.Years år i dag!</p>
+            }
+            else
+            {
+                <p style="font-size:24px"><b>@birthday.Name</b> har bursdag i dag!</p>
+            }
+        }
                             
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     }
 
 
@@ -49,25 +31,24 @@
         {
             if (@birthday.Days == 1)
             {
-                <p><b>@birthday.Name</b> fyller <b>@birthday.Years</b> år i morgen!</p>
+                <p style="font-size:20px"><b>@birthday.Name</b> fyller <b>@birthday.Years</b> år i morgen!</p>
             }
             else
             {
-                <p><b>@birthday.Name</b> fyller <b>@birthday.Years</b> år om @birthday.Days dager</p>
+                <p style="font-size:20px"><b>@birthday.Name</b> fyller <b>@birthday.Years</b> år om @birthday.Days dager</p>
             }
         }
         else
         {
             if (@birthday.Days == 1)
             {
-                <p><b>@birthday.Name</b> har bursdag i morgen!</p>
+                <p style="font-size:20px"><b>@birthday.Name</b> har bursdag i morgen!</p>
             }
             else
             {
-                <p><b>@birthday.Name</b> har bursdag om @birthday.Days dager</p>
+                <p style="font-size:20px"><b>@birthday.Name</b> har bursdag om @birthday.Days dager</p>
             }
         }
     }
-</center>
+</div>
 
-@*<iframe src="https://hjerpbakk.com/dips/" height="450" width="100%"></iframe>*@

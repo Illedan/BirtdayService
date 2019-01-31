@@ -1,0 +1,21 @@
+﻿@page "{location=Oslo}"
+
+@using birthdayservice.Model
+@model AllModel
+@{
+    ViewData["Title"] = "Birthdays";
+}
+<div style="     position: relative; text-align: center; ">
+
+    @foreach (var month in Model.Months)
+    {
+        <p>@month.Name</p>
+        <hr />
+
+        foreach (var day in month.Birthdays)
+        {
+            <p> @day.Name er født @day.Date.ToString("d"), alder @day.Years</p>
+        }
+        <hr />
+    }
+</div>

@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    image: "birthdayservice"
+    ports:
+     - "5002:5002"
+    environment:
+     - DATABASEPATH=/c/temp/birtday.db
+    volumes:
+     - C:/sqlite/:/c/temp/

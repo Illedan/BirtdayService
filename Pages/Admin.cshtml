@@ -1,0 +1,37 @@
+﻿@page "{location=Oslo}"
+
+@using birthdayservice.Model
+@model AdminModel
+@{
+    ViewData["Title"] = "Birthdays";
+}
+
+
+<div class="col-lg-1">
+    <h1 style="width: 200px " >Registrer ny bursdag</h1>
+    <form asp-page-handler="birthday" method="post" style="width: 200px; text-align: center;" >
+        <table>
+            <tr>
+                <td>Lokasjon:</td>
+                <td><input name="location" value="@Model.Location" title="Location"/></td>
+            </tr>
+            <tr>
+                <td>Navn:</td>
+                <td><input name="name" value="" title="Name"/></td>
+            </tr>
+            <tr>
+                <td>År:</td>
+                <td><input name="year" value="" type="number"  title="Year"/></td>
+            </tr>
+            <tr>
+                <td>Måned:</td>
+                <td><input name="month" value="" type="number" title="Month"/></td>
+            </tr>
+            <tr>
+                <td>Dag:</td>
+                <td><input name="day" value="" type="number"  title="Day"/></td>
+            </tr>
+        </table>
+        <button class="btn btn-default">Save</button>
+    </form>
+</div>
