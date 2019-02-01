@@ -22,7 +22,6 @@ namespace birthdayservice.Pages
         public async Task OnGetAsync(string location)
         {
             var birtdays = await m_birthdayQuery.GetBirthdays(location);
-            await Task.Delay(0);
             var now = DateTime.Now;
             Response = new BirtdayResponse
             {
