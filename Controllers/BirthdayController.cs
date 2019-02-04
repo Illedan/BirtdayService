@@ -24,17 +24,20 @@ namespace birthdayservice.Controllers
         
 
         // GET: api/<controller>
-        [HttpGet("{location}")]
-        public async Task<BirtdayResponse> Get(string location)
+        [HttpGet("{location}/{amount?}")]
+        public async Task<BirtdayResponse> Get(string location, int amount=3)
         {
             var birtdays = await m_birthdayQuery.GetBirthdays(location);
             var now = DateTime.Now;
             var response = new BirtdayResponse
             {
-                TodaysBirthdays = birtdays.Where(b => b.Date.Day == now.Day && b.Date.Month == now.Month).ToList()
+                TodaysBirthdays = birtdays.Where(b => b.Days == 0).ToList()
             };
+            if (response.TodaysBirthdays.Count < amount)
+            {
+                response.NextBirthdays.AddRange(birtdays.Where(b => !response.TodaysBirthdays.Contains(b)).Take(amount - response.TodaysBirthdays.Count));
+            }
 
-            response.NextBirthdays.AddRange(birtdays.Where(b => !response.TodaysBirthdays.Contains(b)).Take(3));
             return response;
         }
 
@@ -46,10 +49,19 @@ namespace birthdayservice.Controllers
         //}
 
         //// POST api/<controller>
-        //[HttpPost]
-        //public void Post([FromBody]string value)
-        //{
-        //}
+        [HttpPost]
+        public async Task Post([FromBody]BirthdayAddRequest birthdayAddRequest)
+        {
+            await m_birthdayQuery.AddBirthday(
+                new BirthAddDto
+                {
+                    Name = birthdayAddRequest.Name,
+                    Location = birthdayAddRequest.Location,
+                    Day = birthdayAddRequest.Date.Day,
+                    Month = birthdayAddRequest.Date.Month,
+                    Year = birthdayAddRequest.Date.Year,
+                });
+        }
 
         //// PUT api/<controller>/5
         //[HttpPut("{id}")]

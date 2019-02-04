@@ -31,11 +31,13 @@ namespace birthdayservice.Query
                     while (rdr.Read())
                     {
                         var date = new DateTime(rdr.GetInt32(5), rdr.GetInt32(4), rdr.GetInt32(3));
+                        var year = date.Month == nextMonth && nextMonth == 1 ? DateTime.Now.Year + 1 : DateTime.Now.Year;
                         var note = new Birthday
                         {
-                            //Id = rdr.GetInt32(0),
+                            Id = rdr.GetInt32(0),
                             Name = rdr.GetString(2),
-                            Date = new DateTime(date.Month == nextMonth && nextMonth == 1 ? DateTime.Now.Year + 1 : DateTime.Now.Year, date.Month, date.Day), 
+                            Date = date,
+                            Days = (int)((new DateTime(year, date.Month, date.Day).Date - DateTime.Now.Date).TotalDays),
                             Years = (DateTime.Now.Year-date.Year)
                         };
 
@@ -48,13 +50,13 @@ namespace birthdayservice.Query
                 con.Close();
             }
 
-            birthdays = birthdays.Where(b=> b.Date.Date >= DateTime.Now.Date).OrderBy(b => b.Days).ToList();
+            birthdays = birthdays.Where(b=> b.Days >= 0).OrderBy(b => b.Days).ToList();
             return birthdays;
         }
 
         public async Task<List<Month>> GetAllBirthdays(string location)
         {
-            if (location.Any(l => !char.IsNumber(l) && !char.IsLetter(l))) throw new ArgumentException("Invalid location");
+            if (string.IsNullOrEmpty(location) || location.Any(l => !char.IsNumber(l) && !char.IsLetter(l))) throw new ArgumentException("Invalid location");
             string cs = "URI=file:" + DatabaseFileLocation.ConnectString;
             var birthdays = new List<Birthday>();
             using (SQLiteConnection con = new SQLiteConnection(cs))
@@ -92,7 +94,7 @@ namespace birthdayservice.Query
 
         public async Task AddBirthday(BirthAddDto birthAddDto)
         {
-            if (birthAddDto.Location.Any(l => !char.IsNumber(l) && !char.IsLetter(l) && !char.IsWhiteSpace(l))) throw new ArgumentException("Invalid location");
+            if (birthAddDto.Location.Any(l => !char.IsNumber(l) && !char.IsLetter(l))) throw new ArgumentException("Invalid location");
             if (birthAddDto.Name.Any(l => !char.IsNumber(l) && !char.IsLetter(l) && !char.IsWhiteSpace(l))) throw new ArgumentException("Invalid name");
 
             var cs = "DataSource=" + DatabaseFileLocation.ConnectString;

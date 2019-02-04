@@ -25,7 +25,7 @@ namespace birthdayservice.Pages
             var now = DateTime.Now;
             Response = new BirtdayResponse
             {
-                TodaysBirthdays = birtdays.Where(b => b.Date.Day == now.Day && b.Date.Month == now.Month).ToList()
+                TodaysBirthdays = birtdays.Where(b => b.Days == 0).ToList()
             };
 
             Response.NextBirthdays.AddRange(birtdays.Where(b => !Response.TodaysBirthdays.Contains(b)).Take(3));
