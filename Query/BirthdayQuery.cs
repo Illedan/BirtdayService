@@ -120,5 +120,28 @@ namespace birthdayservice.Query
                 con.Close();
             }
         }
+
+
+        public async Task DeleteBirthday(int id)
+        {
+            var cs = "DataSource=" + DatabaseFileLocation.ConnectString;
+            using (var con = new SQLiteConnection(cs))
+            {
+                con.Open();
+                var stm = "delete from birthday where id = @id;";
+
+                using (var cmd = new SQLiteCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = stm;
+                    cmd.Prepare();
+
+                    cmd.Parameters.AddWithValue("@id", id);
+                    await cmd.ExecuteNonQueryAsync();
+                }
+
+                con.Close();
+            }
+        }
     }
 }
